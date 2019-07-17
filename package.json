@@ -1,0 +1,28 @@
+{
+  "name": "mario3-ts",
+  "version": "1.0.0",
+  "description": "SMB3 using Phaser3/Webpack/Tmx",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch & live-server --port=8085"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JChouCode/mario3-ts.git"
+  },
+  "author": "Jeffrey Chou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JChouCode/mario3-ts/issues"
+  },
+  "homepage": "https://github.com/JChouCode/mario3-ts#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "phaser": "^3.18.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6"
+  }
+}
