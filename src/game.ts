@@ -4,9 +4,16 @@ import { MainScene } from "./scenes/game-scene";
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
-  width: 800,
-  height: 344,
+  // width: 800,
+  // height: 344,
   type: Phaser.AUTO,
+  scale: {
+    parent: 'phaser-example',
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 677,
+    height: 344
+  },
   parent: "game",
   scene: MainScene,
   physics: {

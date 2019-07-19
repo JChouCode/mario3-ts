@@ -1,5 +1,6 @@
 
 import { Mario } from "../objects/mario";
+import { Goomba } from "../objects/goomba";
 
 export class MainScene extends Phaser.Scene {
 
@@ -12,6 +13,11 @@ export class MainScene extends Phaser.Scene {
   private plantLayer: Phaser.Tilemaps.StaticTilemapLayer;
 
   private player: Mario;
+  private enemies: Phaser.GameObjects.Group;
+
+  private stomp: Phaser.Sound.BaseSound;
+  private lose: Phaser.Sound.BaseSound;
+  private bgmusic: Phaser.Sound.BaseSound;
 
   constructor() {
     super({
@@ -25,13 +31,17 @@ export class MainScene extends Phaser.Scene {
     this.load.image("tileset", "./src/assets/tileset.png");
     this.load.tilemapTiledJSON("map", "./src/assets/map.json");
     this.load.atlas("atlas", "./src/assets/atlas.png", "./src/assets/atlas.json");
-    this.load.audio("bgmusic", "./src/assets/bgmusic.mp3");
+    this.load.audio("bgmusic", "./src/assets/level1.mp3");
     this.load.audio("jump", "./src/assets/jump.wav");
+    this.load.audio("stomp", "./src/assets/stomp.wav");
+    this.load.audio("lose", "./src/assets/lose-life.mp3");
   }
 
   create(): void {
-    let bgmusic = this.sound.add("bgmusic");
-    bgmusic.play();
+    this.bgmusic = this.sound.add("bgmusic");
+    this.stomp = this.sound.add("stomp");
+    this.lose = this.sound.add("lose");
+    this.bgmusic.play("", { loop: true });
     this.map = this.make.tilemap({ key: "map" });
     this.tileset = this.map.addTilesetImage("mariotest4", "tileset");
     this.backgroundLayer = this.map.createStaticLayer("background", this.tileset, 0, 0)
@@ -47,8 +57,26 @@ export class MainScene extends Phaser.Scene {
     this.backgroundLayer.setCollisionByProperty({ collides: true });
     this.aboveLayer.setCollisionByProperty({ collides: true });
 
+    this.enemies = this.add.group({
+      runChildUpdate: true
+    });
+
+    this.loadEnemies();
+
+
     this.physics.add.collider(this.player, this.backgroundLayer);
     this.physics.add.collider(this.player, this.aboveLayer);
+    // this.physics.add.collider(this.player, this.enemies);
+    this.physics.add.collider(this.enemies, this.backgroundLayer);
+    this.physics.add.collider(this.enemies, this.aboveLayer);
+
+    this.physics.add.overlap(
+      this.player,
+      this.enemies,
+      this.checkHeadHit,
+      null,
+      this
+    );
 
     const camera = this.cameras.main;
     camera.startFollow(this.player);
@@ -58,4 +86,46 @@ export class MainScene extends Phaser.Scene {
   update(): void {
     this.player.update()
   }
+
+  private loadEnemies(): void {
+    const objects = this.map.getObjectLayer("enemy").objects as any[];
+    objects.forEach(object => {
+      if (object.type === "goomba") {
+        this.enemies.add(
+          new Goomba({
+            scene: this,
+            x: object.x,
+            y: object.y - 40,
+            key: "atlas",
+            frame: "goomba0"
+          }));
+      }
+    });
+  }
+
+  private checkHeadHit(_player, _enemy): void {
+    if (_player.body.touching.down && _enemy.body.touching.up) {
+      this.stomp.play();
+      _enemy.headHit();
+      _player.bounce();
+      this.add.tween({
+        targets: _enemy,
+        props: { alpha: 0 },
+        duration: 1000,
+        ease: "Power0",
+        yoyo: false,
+        onComplete: function () {
+          _enemy.isDead();
+        }
+      });
+    } else {
+      _player.hit()
+      this.bgmusic.stop();
+      this.lose.play();
+    }
+
+  }
+
+
 }
+
