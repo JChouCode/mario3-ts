@@ -14,48 +14,10 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   constructor(params) {
     super(params.scene, params.x, params.y, params.key, params.frame);
-
     // variables
     this.currentScene = params.scene;
     this.initSprite();
     this.currentScene.add.existing(this);
-
-    // create goomba walk animation
-    this.currentScene.anims.create({
-      key: "goomba",
-      frames: this.currentScene.anims.generateFrameNames("atlas", {
-        prefix: "goomba",
-        start: 0,
-        end: 1
-      }),
-      frameRate: 5,
-      repeat: -1
-    });
-
-    // create koopa walk animation
-    this.currentScene.anims.create({
-      key: "koopa",
-      frames: this.currentScene.anims.generateFrameNames("atlas", {
-        prefix: "koopa",
-        start: 0,
-        end: 1
-      }),
-      frameRate: 5,
-      repeat: -1
-    });
-
-    this.currentScene.anims.create({
-      key: "koopa-shell",
-      frames: this.currentScene.anims.generateFrameNames("atlas", {
-        prefix: "koopa-shell",
-        start: 0,
-        end: 2
-      }),
-      frameRate: 25,
-      repeat: -1
-    });
-
-
   }
 
   update(): void {
@@ -69,12 +31,13 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.dead = false;
 
     // sprite
-    this.setOrigin(0, 0);
+    // this.setOrigin(0, 0);
+    // this.setDisplayOrigin(1, 1);
     // this.setFrame(0);
 
     // physics
     this.currentScene.physics.world.enable(this);
-    this.body.setSize(16, 16);
+    // this.body.setSize(16, 16);
     // this.body.setCollideWorldBounds(true);
   }
 

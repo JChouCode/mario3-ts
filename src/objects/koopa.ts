@@ -1,20 +1,24 @@
 import { Enemy, EnemyType } from "./enemy";
 
+export enum KoopaColor {
+  green,
+  red
+}
+
 export class Koopa extends Enemy {
 
   private inShell: boolean;
   private shellSpeed: number;
+  private koopaColor: KoopaColor;
 
-  constructor(params) {
+  constructor(params, koopaColor: KoopaColor) {
     super(params);
     this.speed = -50;
     this.inShell = false;
     this.shellSpeed = 170;
     this.setOrigin(0);
     this.enemyType = EnemyType.koopa;
-    // this.body.setOffset(0, 100);
-    // this.set
-    // this.setDisplayOrigin(0, 100);
+    this.koopaColor = koopaColor;
     this.body.setSize(16, 26);
     this.setFlipX(false);
   }
@@ -31,16 +35,21 @@ export class Koopa extends Enemy {
         // Koopa not in shell
         if (!this.inShell) {
           this.body.setVelocityX(this.speed);
-          this.anims.play("koopa", true);
+          if (this.koopaColor == KoopaColor.green) {
+            this.anims.play("koopa", true);
+          } else {
+            this.anims.play("koopa-red", true);
+          }
         }
         // Koopa in shell
         else {
           if (this.body.velocity.x != 0) {
-            this.anims.play("koopa-shell", true);
+            if (this.koopaColor == KoopaColor.green) {
+              this.anims.play("koopa-shell", true);
+            } else {
+              this.anims.play("koopa-shell-red", true);
+            }
           }
-          // else {
-          //   this.setTexture("atlas", "koopa-shell-idle");
-          // }
         }
       }
       // If on screen, show
@@ -64,13 +73,14 @@ export class Koopa extends Enemy {
   headHit(): void {
     if (!this.inShell) {
       this.inShell = true;
-      // make body smaller
-      // this.setDisplayOrigin(0, -15);
-      this.setTexture("atlas", "koopa-shell-idle");
+      if (this.koopaColor == KoopaColor.green) {
+        this.setTexture("atlas", "koopa-shell-idle");
+      } else {
+        this.setTexture("atlas", "koopa-shell-red-idle");
+      }
       this.setDisplayOrigin(0, 0);
       this.body.setSize(16, 16);
       this.anims.stop();
-      // this.setTexture("atlas", "koopa-shell-idle");
       this.body.stop();
     }
   }

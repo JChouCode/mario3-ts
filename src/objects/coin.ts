@@ -13,7 +13,7 @@ export class Coin extends Phaser.GameObjects.Sprite {
   }
 
   private initSprite() {
-    this.setOrigin(0, 0);
+    this.setOrigin(0.5, 0.5);
     this.currentScene.physics.world.enable(this);
     this.body.setSize(14, 16);
   }

@@ -7,6 +7,8 @@ export class Mario extends Phaser.GameObjects.Sprite {
   private jump: Phaser.Sound.BaseSound;
   private isJumping: boolean;
   private alive: boolean;
+  private isBig: boolean;
+  private isTransforming: boolean;
 
   constructor(params) {
     super(params.scene, params.x, params.y, params.key, params.frame);
@@ -14,21 +16,16 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.initSprite();
     this.currentScene.add.existing(this);
     this.cursors = this.currentScene.input.keyboard.createCursorKeys();
-    this.currentScene.anims.create({
-      key: "mario-walk",
-      frames: this.currentScene.anims.generateFrameNames("atlas", {
-        prefix: "mario-walk",
-        start: 0,
-        end: 1
-      }),
-      frameRate: 5,
-      repeat: -1
-    });
     this.jump = this.scene.sound.add("jump");
+    this.isBig = false;
+    this.isTransforming = false;
   }
 
 
   update(): void {
+    if (this.isTransforming) {
+      return;
+    }
     this.animate()
     this.moveInput()
   }
@@ -38,11 +35,12 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.jumpHeight = 300;
     this.isJumping = false;
     this.alive = true;
-    this.setOrigin(0.5, 0.5);
+    this.setOrigin(0.5, 1);
     this.setFlipX(false);
 
     this.currentScene.physics.world.enable(this);
     this.body.setSize(12, 15);
+    // this.body.setSize(16, 27);
     this.body.setOffset(0, 0);
     this.body.maxVelocity.x = 100;
     this.body.maxVelocity.y = 300;
@@ -52,11 +50,26 @@ export class Mario extends Phaser.GameObjects.Sprite {
   private animate() {
     if (this.alive) {
       if (this.body.velocity.y != 0) {
-        this.setTexture("atlas", "mario-jump")
+        this.anims.stop();
+        if (this.isBig) {
+          this.setTexture("atlas", "mario-big-jump");
+          console.log("jump");
+        } else {
+          this.setTexture("atlas", "mario-jump");
+        }
       } else if (this.body.velocity.x != 0) {
-        this.anims.play("mario-walk", true)
+        if (this.isBig) {
+          this.anims.play("mario-walk-big", true);
+        } else {
+          this.anims.play("mario-walk", true);
+        }
       } else {
-        this.setTexture("atlas", "mario-idle")
+        this.anims.stop();
+        if (this.isBig) {
+          this.setTexture("atlas", "mario-big-idle");
+        } else {
+          this.setTexture("atlas", "mario-idle");
+        }
       }
     }
   }
@@ -77,11 +90,9 @@ export class Mario extends Phaser.GameObjects.Sprite {
       }
       if (this.cursors.right.isDown) {
         this.body.setAccelerationX(this.acceleration);
-        // this.body.setVelocityX(this.acceleration);
         this.setFlipX(false);
       } else if (this.cursors.left.isDown) {
         this.body.setAccelerationX(-this.acceleration);
-        // this.body.setVelocityX(this.acceleration);
         this.setFlipX(true);
       } else {
         this.body.setVelocityX(0);
@@ -96,13 +107,6 @@ export class Mario extends Phaser.GameObjects.Sprite {
   }
 
   protected bounce(): void {
-    // this.currentScene.add.tween({
-    //   targets: this,
-    //   props: { y: this.y - 30 },
-    //   duration: 200,
-    //   ease: "Power1",
-    //   yoyo: true
-    // });
     this.body.setVelocityY(-200);
   }
 
@@ -116,5 +120,29 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.body.checkCollision.down = false;
     this.body.checkCollision.left = false;
     this.body.checkCollision.right = false;
+  }
+
+  protected goBig(): void {
+    this.anims.stop();
+    this.isBig = true;
+    this.body.setSize(14, 27);
+    this.setOrigin(0, 1);
+    this.body.stop();
+    this.body.allowGravity = false;
+    this.isTransforming = true;
+    // freeze everything else
+    this.once("animationcomplete",
+      () => {
+        this.isBig = true;
+        this.isTransforming = false;
+        this.body.allowGravity = true;
+        this.body.setSize(14, 27);
+        this.off("animationcomplete");
+        this.y -= 27;
+        this.setOrigin(0.5, 0);
+      }, this);
+    this.anims.play("mario-transform", true);
+    // this.off("animationcomplete");
+    // this.anims.stop();
   }
 }
