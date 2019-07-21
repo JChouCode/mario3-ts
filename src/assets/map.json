@@ -73,6 +73,12 @@
                  "height":16,
                  "id":23,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"content",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "type":"question",
                  "visible":true,
@@ -84,6 +90,12 @@
                  "height":16,
                  "id":24,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"content",
+                         "type":"string",
+                         "value":"mushroom"
+                        }],
                  "rotation":0,
                  "type":"question",
                  "visible":true,
@@ -95,6 +107,12 @@
                  "height":16,
                  "id":25,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"content",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "type":"question",
                  "visible":true,
@@ -106,6 +124,12 @@
                  "height":16,
                  "id":26,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"content",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "type":"question",
                  "visible":true,
@@ -343,6 +367,61 @@
                  "width":16,
                  "x":3072,
                  "y":176
+                }, 
+                {
+                 "height":16,
+                 "id":51,
+                 "name":"",
+                 "rotation":0,
+                 "type":"brick",
+                 "visible":true,
+                 "width":16,
+                 "x":112,
+                 "y":240
+                }, 
+                {
+                 "height":16,
+                 "id":52,
+                 "name":"",
+                 "rotation":0,
+                 "type":"brick",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":240
+                }, 
+                {
+                 "height":16,
+                 "id":53,
+                 "name":"",
+                 "rotation":0,
+                 "type":"brick",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":240
+                }, 
+                {
+                 "height":16,
+                 "id":54,
+                 "name":"",
+                 "rotation":0,
+                 "type":"music",
+                 "visible":true,
+                 "width":16,
+                 "x":64,
+                 "y":240
+                }, 
+                {
+                 "height":16,
+                 "id":56,
+                 "name":"",
+                 "rotation":0,
+                 "type":"koopa-red",
+                 "visible":true,
+                 "width":16,
+                 "x":480,
+                 "y":240
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -364,7 +443,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":50,
+ "nextobjectid":57,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.4",
@@ -373,7 +452,7 @@
         {
          "columns":73,
          "firstgid":1,
-         "image":"..\/tilesset.png",
+         "image":"..\/..\/..\/tilesset.png",
          "imageheight":358,
          "imagewidth":1242,
          "margin":1,
@@ -14184,7 +14263,7 @@
         {
          "columns":73,
          "firstgid":1534,
-         "image":"..\/tilesset.png",
+         "image":"..\/..\/..\/tilesset.png",
          "imageheight":358,
          "imagewidth":1242,
          "margin":1,
@@ -27995,7 +28074,7 @@
         {
          "columns":73,
          "firstgid":3067,
-         "image":"..\/tilesset.png",
+         "image":"..\/..\/..\/tilesset.png",
          "imageheight":358,
          "imagewidth":1242,
          "margin":1,
@@ -41806,7 +41885,7 @@
         {
          "columns":73,
          "firstgid":4600,
-         "image":"..\/tilesset.png",
+         "image":"..\/..\/..\/tilesset.png",
          "imageheight":358,
          "imagewidth":1242,
          "margin":1,
