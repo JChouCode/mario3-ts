@@ -11,7 +11,6 @@ export class Mario extends Phaser.GameObjects.Sprite {
   constructor(params) {
     super(params.scene, params.x, params.y, params.key, params.frame);
     this.currentScene = params.scene;
-    // this.currentScene.add.existing(this);
     this.initSprite();
     this.currentScene.add.existing(this);
     this.cursors = this.currentScene.input.keyboard.createCursorKeys();
@@ -36,7 +35,7 @@ export class Mario extends Phaser.GameObjects.Sprite {
 
   private initSprite() {
     this.acceleration = 500;
-    this.jumpHeight = 340;
+    this.jumpHeight = 300;
     this.isJumping = false;
     this.alive = true;
     this.setOrigin(0.5, 0.5);
@@ -73,12 +72,16 @@ export class Mario extends Phaser.GameObjects.Sprite {
         this.body.blocked.down
       ) {
         this.isJumping = false;
+      } else {
+        this.isJumping = true;
       }
       if (this.cursors.right.isDown) {
         this.body.setAccelerationX(this.acceleration);
+        // this.body.setVelocityX(this.acceleration);
         this.setFlipX(false);
       } else if (this.cursors.left.isDown) {
         this.body.setAccelerationX(-this.acceleration);
+        // this.body.setVelocityX(this.acceleration);
         this.setFlipX(true);
       } else {
         this.body.setVelocityX(0);
@@ -95,7 +98,7 @@ export class Mario extends Phaser.GameObjects.Sprite {
   protected bounce(): void {
     // this.currentScene.add.tween({
     //   targets: this,
-    //   props: { y: this.y - 5 },
+    //   props: { y: this.y - 30 },
     //   duration: 200,
     //   ease: "Power1",
     //   yoyo: true

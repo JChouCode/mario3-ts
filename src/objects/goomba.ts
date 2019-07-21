@@ -1,10 +1,11 @@
-import { Enemy } from "./enemy";
+import { Enemy, EnemyType } from "./enemy";
 
 export class Goomba extends Enemy {
   constructor(params) {
     super(params);
-    this.speed = 50;
+    this.speed = -50;
     this.body.setOffset(0, 0);
+    this.enemyType = EnemyType.goomba;
   }
 
   update() {
@@ -21,21 +22,35 @@ export class Goomba extends Enemy {
           this.getBounds(),
           this.currentScene.cameras.main.worldView
         )) {
-          console.log("hm");
           this.shown = true;
         }
       }
-    } else {
-      this.anims.stop();
-      this.body.velocity.x = 0;
-      this.body.checkCollision.none = true;
     }
+    // else {
+    //   this.anims.stop();
+    //   this.body.velocity.x = 0;
+    //   this.body.checkCollision.none = true;
+    // }
   }
 
   headHit(): void {
     this.dead = true;
-    this.body.setOffset(0, 5);
+    this.anims.stop();
     this.setTexture("atlas", "goomba-flat");
+    this.setDisplayOrigin(0, 0);
+    this.body.setSize(16, 9);
+    this.body.stop();
+    // this.body.allowGravity = false;
+    this.currentScene.add.tween({
+      targets: this,
+      props: { alpha: 0 },
+      duration: 800,
+      ease: "Power0",
+      yoyo: false,
+      onComplete: () => {
+        this.isDead();
+      }
+    });
   }
 
 

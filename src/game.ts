@@ -7,6 +7,7 @@ const config: Phaser.Types.Core.GameConfig = {
   // width: 800,
   // height: 344,
   type: Phaser.AUTO,
+  // zoom: 2,
   scale: {
     parent: 'phaser-example',
     mode: Phaser.Scale.FIT,
@@ -19,6 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: "arcade",
     arcade: {
+      // debug: true,
       gravity: { y: 475 }
     }
   },
