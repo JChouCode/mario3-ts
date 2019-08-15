@@ -319,24 +319,25 @@ export class MainScene extends Phaser.Scene {
   private collideQuestion(_player, _question): void {
     if (_player.body.touching.up && _question.body.touching.down) {
       _question.boxHit();
-      switch (_question.getContent()) {
-        case Collectible.coin: {
-          _question.spawnCoin();
-          break;
-        }
-        case Collectible.mushroom: {
-          this.collectibles.add(new PowerUp({
-            scene: this,
-            x: _question.x + _question.width / 2,
-            y: _question.y,
-            key: "atlas",
-            frame: "mushroom"
-          }));
-          this.sound.play("mushroom");
-          break;
+      if (_question.isOpened()) {
+        switch (_question.getContent()) {
+          case Collectible.coin: {
+            _question.spawnCoin();
+            break;
+          }
+          case Collectible.mushroom: {
+            this.collectibles.add(new PowerUp({
+              scene: this,
+              x: _question.x + _question.width / 2,
+              y: _question.y,
+              key: "atlas",
+              frame: "mushroom"
+            }));
+            this.sound.play("mushroom");
+            break;
+          }
         }
       }
-
     }
   }
 

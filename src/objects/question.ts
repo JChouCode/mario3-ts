@@ -77,7 +77,11 @@ export class Question extends Phaser.GameObjects.Sprite {
   }
 
   getContent(): Collectible {
-    return this.content
+    return this.content;
+  }
+
+  isOpened(): boolean {
+    return this.opened;
   }
 }
 

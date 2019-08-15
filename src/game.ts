@@ -4,10 +4,7 @@ import { MainScene } from "./scenes/game-scene";
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
-  // width: 800,
-  // height: 344,
   type: Phaser.AUTO,
-  // zoom: 2,
   scale: {
     parent: 'phaser-example',
     mode: Phaser.Scale.FIT,

@@ -143,7 +143,7 @@ export class Mario extends Phaser.GameObjects.Sprite {
         this.body.allowGravity = true;
         this.body.setSize(14, 27);
         this.off("animationcomplete");
-        this.y -= 27;
+        this.y = 298;
         this.setOrigin(0.5, 0);
       }, this);
     this.anims.play("mario-transform", true);
