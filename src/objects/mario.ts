@@ -1,3 +1,5 @@
+import sleep from "sleep-promise"
+
 export class Mario extends Phaser.GameObjects.Sprite {
   private currentScene: Phaser.Scene;
   private acceleration: number;
@@ -18,6 +20,7 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.cursors = this.currentScene.input.keyboard.createCursorKeys();
     this.jump = this.scene.sound.add("jump");
     this.isBig = false;
+    this.setOrigin(0, 1);
     this.isTransforming = false;
   }
 
@@ -110,7 +113,7 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.body.setVelocityY(-200);
   }
 
-  protected hit(): void {
+  protected async hit(): Promise<void> {
     this.alive = false;
     this.body.stop();
     this.anims.stop();
@@ -120,6 +123,8 @@ export class Mario extends Phaser.GameObjects.Sprite {
     this.body.checkCollision.down = false;
     this.body.checkCollision.left = false;
     this.body.checkCollision.right = false;
+    await sleep(3000);
+    this.currentScene.scene.restart();
   }
 
   protected goBig(): void {

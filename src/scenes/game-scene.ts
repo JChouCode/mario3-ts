@@ -379,37 +379,5 @@ export class MainScene extends Phaser.Scene {
       repeat: repeat
     });
   }
-
-  // private collideEnemies(_enemy1, _enemy2): void {
-  // let reverse: boolean = true;
-  //   switch (_enemy1.getEnemyType(), _enemy2.getEnemyType()) {
-  //     case EnemyType.goomba, EnemyType.koopa: {
-  //       if (_enemy2.isKicked()) {
-  //         this.sound.play("kick");
-  //         _enemy1.shellHit(1);
-  //         // _enemy2.shoot(1);
-  //         reverse = false;
-  //       }
-  //       break;
-  //     }
-  //     case EnemyType.koopa, EnemyType.goomba: {
-  //       if (_enemy1.isKicked()) {
-  //         console.log("hm");
-  //         this.sound.play("kick");
-  //         _enemy2.shellHit(-1);
-  //         // _enemy1.shoot(-1);
-  //         reverse = false;
-  //       }
-  //       break;
-  //     }
-  //     default: {
-  //       return
-  //     }
-  //   }
-  //   if (reverse) {
-  //     _enemy1.reverse();
-  //     _enemy2.reverse();
-  //   }
-  // }
 }
 
