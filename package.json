@@ -19,11 +19,11 @@
   "homepage": "https://github.com/JChouCode/mario3-ts#readme",
   "devDependencies": {
     "live-server": "^1.2.1",
-    "phaser": "^3.18.1",
-    "ts-loader": "^6.0.4",
+    "phaser": "^3.55.2",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.5.3",
-    "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "sleep-promise": "^8.0.1"
